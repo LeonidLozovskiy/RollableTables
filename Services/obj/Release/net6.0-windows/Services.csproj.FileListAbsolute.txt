@@ -1,0 +1,12 @@
+C:\proj\RollableTables\Services\bin\Release\net6.0-windows\Services.deps.json
+C:\proj\RollableTables\Services\bin\Release\net6.0-windows\Services.dll
+C:\proj\RollableTables\Services\bin\Release\net6.0-windows\Services.pdb
+C:\proj\RollableTables\Services\obj\Release\net6.0-windows\Services.csproj.AssemblyReference.cache
+C:\proj\RollableTables\Services\obj\Release\net6.0-windows\Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\proj\RollableTables\Services\obj\Release\net6.0-windows\Services.AssemblyInfoInputs.cache
+C:\proj\RollableTables\Services\obj\Release\net6.0-windows\Services.AssemblyInfo.cs
+C:\proj\RollableTables\Services\obj\Release\net6.0-windows\Services.csproj.CoreCompileInputs.cache
+C:\proj\RollableTables\Services\obj\Release\net6.0-windows\Services.dll
+C:\proj\RollableTables\Services\obj\Release\net6.0-windows\refint\Services.dll
+C:\proj\RollableTables\Services\obj\Release\net6.0-windows\Services.pdb
+C:\proj\RollableTables\Services\obj\Release\net6.0-windows\ref\Services.dll

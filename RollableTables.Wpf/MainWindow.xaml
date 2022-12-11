@@ -1,0 +1,35 @@
+﻿<mah:MetroWindow x:Class="RollableTables.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:System="clr-namespace:System;assembly=System.Runtime"
+                 xmlns:rollableTables="clr-namespace:RollableTables"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 mc:Ignorable="d"
+                 d:DataContext="{d:DesignInstance Type=rollableTables:MainWindowViewModel}"
+                 Title="MainWindow" Height="450" Width="350">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.4*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ScrollViewer>
+            <ItemsControl ItemsSource="{Binding Path=Buttons}" BorderThickness="0">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding Path=Command}"
+                                Margin="4" >
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Name}" TextWrapping="WrapWithOverflow"/>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <Border Grid.Column="1" Margin="5" BorderThickness="2" BorderBrush="Black">
+            <TextBox TextWrapping="WrapWithOverflow"
+                     rollableTables:TextBoxBehaviour.ScrollOnTextChanged="True" VerticalScrollBarVisibility="Auto"
+                     AcceptsReturn="True" IsReadOnly="True" Text="{Binding Path=Log}" />
+        </Border>
+    </Grid>
+</mah:MetroWindow>

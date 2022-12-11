@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "WPkFHLVAirFkj3EDlUcOVDbdGUIttQ2NAktm5AWEhfF6DKqK3NT6yh2vskScKvPXyFMko/NvnJ2Lkejx4IJU+g==",
+  "success": true,
+  "projectFilePath": "C:\\proj\\RollableTables\\RollableTables.Wpf\\RollableTables.Wpf.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Leonid\\.nuget\\packages\\controlzex\\4.4.0\\controlzex.4.4.0.nupkg.sha512",
+    "C:\\Users\\Leonid\\.nuget\\packages\\jetbrains.annotations\\2022.3.1\\jetbrains.annotations.2022.3.1.nupkg.sha512",
+    "C:\\Users\\Leonid\\.nuget\\packages\\litedb\\5.0.12\\litedb.5.0.12.nupkg.sha512",
+    "C:\\Users\\Leonid\\.nuget\\packages\\mahapps.metro\\2.4.9\\mahapps.metro.2.4.9.nupkg.sha512",
+    "C:\\Users\\Leonid\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\Leonid\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.19\\microsoft.xaml.behaviors.wpf.1.1.19.nupkg.sha512",
+    "C:\\Users\\Leonid\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512"
+  ],
+  "logs": []
+}

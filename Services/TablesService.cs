@@ -47,4 +47,15 @@ public class TablesService
             collection.DeleteMany(x => x.Name == tableName);
         }
     }
+
+    public void UpdateTable(RollableTable table)
+    {
+        using (var db = new LiteDatabase(@"Tables.db"))
+        {
+            var collection = db.GetCollection<RollableTable>("Tables");
+            var dbTable = collection.FindOne(x => x.Name == table.Name);
+            dbTable.Rows = table.Rows;
+            collection.Update(dbTable);
+        }
+    }
 }

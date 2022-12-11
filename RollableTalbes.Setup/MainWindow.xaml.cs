@@ -22,6 +22,8 @@ namespace RollableTalbes.MenuMaker
 
         public MenuTreeItems SelectedTreeItem { get; set; }
 
+        public RollableTable? SelectedTable { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -211,19 +213,25 @@ namespace RollableTalbes.MenuMaker
             NodeName.Text = SelectedTreeItem.Name;
             TableName.Content = SelectedTreeItem.TableName;
 
-            SelectedTableItems.ItemsSource = Tables.FirstOrDefault(x => SelectedTreeItem.TableName == x.Name)?.Rows;
+            UpdateSelectedTable(Tables.FirstOrDefault(x => SelectedTreeItem.TableName == x.Name));
         }
 
         private void ButtonBase_SaveSelectedItem(object sender, RoutedEventArgs e)
         {
             SelectedTreeItem.Name = NodeName.Text;
             MenuTree.ItemsSource = new ObservableCollection<MenuTreeItems>(new[] { Menu });
-            ;
         }
 
         private void TablesListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedTableItems.ItemsSource = ( TablesListView.SelectedItem as RollableTable )?.Rows;
+            UpdateSelectedTable((RollableTable)TablesListView.SelectedItem);
+        }
+
+        private void UpdateSelectedTable(RollableTable table)
+        {
+            SelectedTable = table;
+            SelectedTableItems.ItemsSource = null;
+            SelectedTableItems.ItemsSource = SelectedTable?.Rows;
         }
 
         private void IsRemoveUsed_OnChecked(object sender, RoutedEventArgs e)
@@ -270,6 +278,20 @@ namespace RollableTalbes.MenuMaker
             Menu.DeleteTableByName(selectedTable.Name);
             Tables = StaticHolder.TablesService.GetTables();
             UpdateTables();
+        }
+
+        private void ButtonAddTableValue_OnClick(object sender, RoutedEventArgs e)
+        {
+            SelectedTable.Rows.Add(new TableRow{Value = NewTableValue.Text, Weight = (int)(NewTableValueWeight.Value ?? 1)});
+            UpdateSelectedTable(SelectedTable);
+            StaticHolder.TablesService.UpdateTable(SelectedTable);
+        }
+
+        private void ButtonRemoveTableValue_OnClick(object sender, RoutedEventArgs e)
+        {
+            SelectedTable.Rows.Remove((TableRow)SelectedTableItems.SelectedItem);
+            UpdateSelectedTable(SelectedTable);
+            StaticHolder.TablesService.UpdateTable(SelectedTable);
         }
     }
 }

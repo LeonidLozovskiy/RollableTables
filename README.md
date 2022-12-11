@@ -37,6 +37,8 @@ App to store and use rollable tables for Tabletop role-playing games
 12) Path to folder with tables in txt. Expected format -> each line new value for table. before value you can add optional number parameter weight -> weight;tableline
 13) Values from selected table (from menu tree or from tables list that was selected last)
 14) Button that allow delete table from DB. Be careful, that can't be undone
+15) Button that delete selected value from current table
+16) Add new value to current table. Number is weight of value.
 
 # Russian
 ## Главная идея получить изменяемое место для хранения и использования таблиц для нри независимо от виртуального стола. Можете спокойно удалить все мои данные и собрать свой собственный набор таблиц
@@ -71,3 +73,5 @@ App to store and use rollable tables for Tabletop role-playing games
 12) Путь к папке с таблицами в формате txt. Ожидаемый формат файлов -> На каждой линии новое значение для таблицы. Перед значением можно добавить опциональный параметр веса значения -> вес;линия таблицы
 13) Здесь отображаются значения выбранной таблицы (из меню или из листа таблиц, в зависимости от того что было выбранно последним)
 14) Кнопка позволяющая удалить таблицу из бд. будьте внимательны, это действие нельзя отменить.
+15) Кнопка удаления выделенного значения из текущей таблицы
+16) Добавить элемент в текущую таблицу. цифра отвечает за вес значения. текстовое поле за само значение.

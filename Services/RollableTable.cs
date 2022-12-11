@@ -1,4 +1,5 @@
 ﻿using System.Net.Cache;
+using LiteDB;
 
 namespace Services;
 
@@ -19,6 +20,9 @@ public class RollableTable
     {
     }
 
+    [BsonId]
+    public ObjectId Id { get; set; }
+    
     public string Name { get; set; }
 
     public List<TableRow> Rows { get; set; }

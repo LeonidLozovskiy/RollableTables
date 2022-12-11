@@ -65,6 +65,7 @@ namespace RollableTalbes.MenuMaker
                     service.SaveTable(newTable);
 
                     Console.WriteLine($@"{newTable.Name} was added");
+                    UpdateTables();
                 }
                 catch (Exception exception)
                 {
@@ -106,6 +107,7 @@ namespace RollableTalbes.MenuMaker
                     var service = new TablesService();
 
                     service.SaveTable(newTable);
+                    UpdateTables();
                 }
                 catch (Exception exception)
                 {

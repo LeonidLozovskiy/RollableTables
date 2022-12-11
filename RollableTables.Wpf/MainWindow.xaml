@@ -8,7 +8,7 @@
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  mc:Ignorable="d"
                  d:DataContext="{d:DesignInstance Type=rollableTables:MainWindowViewModel}"
-                 Title="MainWindow" Height="550" Width="450">
+                 Title="RollableTables" Height="550" Width="450">
 
     <mah:MetroWindow.Resources>
         <rollableTables:MenuItemTypeDiscriminatorToVisibilityConverter x:Key="MenuItemTypeDiscriminatorToVisibilityConverter" />

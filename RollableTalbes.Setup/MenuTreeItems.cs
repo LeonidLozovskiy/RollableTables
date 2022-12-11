@@ -31,6 +31,20 @@ public class MenuTreeItems
         return result.ToArray();
     }
 
+    public void DeleteTableByName(string tableName)
+    {
+        var valueToDelete = Childs.FirstOrDefault(x => x.TableName == tableName);
+        if (valueToDelete != null)
+        {
+            Childs.Remove(valueToDelete);
+        }
+
+        foreach (var child in Childs.Where(x => x.MenuItemTypeDiscriminator == MenuItemTypeDiscriminator.MenuItemLevelViewModel))
+        {
+            child.DeleteTableByName(tableName);
+        }
+    }
+
     public static MenuTreeItems ToTree(MenuItemSerialize item)
     {
         if (item == null)

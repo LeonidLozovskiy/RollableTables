@@ -19,7 +19,7 @@ namespace RollableTalbes.MenuMaker
     public partial class MainWindow
     {
         public RollableTable[] Tables { get; set; }
-        
+
         public MenuTreeItems SelectedTreeItem { get; set; }
 
         public MainWindow()
@@ -34,7 +34,10 @@ namespace RollableTalbes.MenuMaker
         private void UpdateTables()
         {
             var usedTables = Menu.GetUsedTables();
-            TablesListView.ItemsSource = IsHideUsed.IsChecked ?? false ? Tables.Where(x => !usedTables.Contains(x.Name)).ToArray() : Tables;
+
+            TablesListView.ItemsSource = IsHideUsed.IsChecked ?? false
+                                             ? Tables.Where(x => !usedTables.Contains(x.Name)).ToArray()
+                                             : Tables;
         }
 
         public MenuTreeItems Menu { get; set; }
@@ -45,21 +48,28 @@ namespace RollableTalbes.MenuMaker
 
             foreach (var file in files)
             {
-                var text = File.ReadAllText(file);
+                try
+                {
+                    var text = File.ReadAllText(file);
 
-                Root table = JsonSerializer.Deserialize<Root>(text, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    Root table = JsonSerializer.Deserialize<Root>(text, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                var service = new TablesService();
+                    var service = new TablesService();
 
-                var newTable = new RollableTable
-                               {
-                                   Name = table.Name,
-                                   Rows = table.Results.Select(x => new TableRow { Value = x.Text, Weight = x.Weight }).ToList(),
-                               };
+                    var newTable = new RollableTable
+                                   {
+                                       Name = table.Name,
+                                       Rows = table.Results.Select(x => new TableRow { Value = x.Text, Weight = x.Weight }).ToList(),
+                                   };
 
-                service.SaveTable(newTable);
+                    service.SaveTable(newTable);
 
-                Console.WriteLine($@"{newTable.Name} was added");
+                    Console.WriteLine($@"{newTable.Name} was added");
+                }
+                catch (Exception exception)
+                {
+                    // ignore
+                }
             }
         }
 
@@ -69,31 +79,38 @@ namespace RollableTalbes.MenuMaker
 
             foreach (var file in files)
             {
-                var text = File.ReadAllLines(file);
-
-                var newTable = new RollableTable
-                               {
-                                   Name = file,
-                                   Rows = new List<TableRow>(),
-                               };
-
-                foreach (var line in text)
+                try
                 {
-                    var splited = line.Split(':');
+                    var text = File.ReadAllLines(file);
 
-                    if (splited.Length == 1)
+                    var newTable = new RollableTable
+                                   {
+                                       Name = file,
+                                       Rows = new List<TableRow>(),
+                                   };
+
+                    foreach (var line in text)
                     {
-                        newTable.Rows.Add(new TableRow { Value = splited.FirstOrDefault() });
+                        var splited = line.Split(':');
+
+                        if (splited.Length == 1)
+                        {
+                            newTable.Rows.Add(new TableRow { Value = splited.FirstOrDefault() });
+                        }
+                        else
+                        {
+                            newTable.Rows.Add(new TableRow { Value = splited[1], Weight = Int32.Parse(splited[0]) });
+                        }
                     }
-                    else
-                    {
-                        newTable.Rows.Add(new TableRow { Value = splited[1], Weight = Int32.Parse(splited[0]) });
-                    }
+
+                    var service = new TablesService();
+
+                    service.SaveTable(newTable);
                 }
-
-                var service = new TablesService();
-
-                service.SaveTable(newTable);
+                catch (Exception exception)
+                {
+                    // ignore
+                }
             }
         }
 
@@ -142,6 +159,11 @@ namespace RollableTalbes.MenuMaker
         {
             var selectedItem = (MenuTreeItems)MenuTree.SelectedItem;
 
+            if (selectedItem.MenuItemTypeDiscriminator == MenuItemTypeDiscriminator.MenuItemTableViewModel)
+            {
+                selectedItem = FindTreeViewSelectedItemContainer(Menu, selectedItem);
+            }
+
             selectedItem.Childs.Add(new MenuTreeItems
                                     {
                                         MenuItemTypeDiscriminator = MenuItemTypeDiscriminator.MenuItemLevelViewModel,
@@ -157,15 +179,17 @@ namespace RollableTalbes.MenuMaker
             var selectedItem = (MenuTreeItems)MenuTree.SelectedItem;
             var selectedTable = (RollableTable)TablesListView.SelectedItem;
 
-            if (selectedItem.MenuItemTypeDiscriminator == MenuItemTypeDiscriminator.MenuItemLevelViewModel)
+            if (selectedItem.MenuItemTypeDiscriminator == MenuItemTypeDiscriminator.MenuItemTableViewModel)
             {
-                selectedItem.Childs.Add(new MenuTreeItems
-                                        {
-                                            MenuItemTypeDiscriminator = MenuItemTypeDiscriminator.MenuItemTableViewModel,
-                                            Name = selectedTable.Name,
-                                            TableName = selectedTable.Name,
-                                        });
+                selectedItem = FindTreeViewSelectedItemContainer(Menu, selectedItem);
             }
+
+            selectedItem.Childs.Add(new MenuTreeItems
+                                    {
+                                        MenuItemTypeDiscriminator = MenuItemTypeDiscriminator.MenuItemTableViewModel,
+                                        Name = selectedTable.Name,
+                                        TableName = selectedTable.Name,
+                                    });
 
             UpdateTables();
         }
@@ -176,7 +200,7 @@ namespace RollableTalbes.MenuMaker
             options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             var serialize = MenuTreeItems.ToSerialize(Menu);
-            File.WriteAllText("menu.json",System.Text.Json.JsonSerializer.Serialize(serialize, options));
+            File.WriteAllText("menu.json", System.Text.Json.JsonSerializer.Serialize(serialize, options));
         }
 
         private void MenuTree_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -184,19 +208,20 @@ namespace RollableTalbes.MenuMaker
             SelectedTreeItem = (MenuTreeItems)MenuTree.SelectedItem;
             NodeName.Text = SelectedTreeItem.Name;
             TableName.Content = SelectedTreeItem.TableName;
-            
+
             SelectedTableItems.ItemsSource = Tables.FirstOrDefault(x => SelectedTreeItem.TableName == x.Name)?.Rows;
         }
 
         private void ButtonBase_SaveSelectedItem(object sender, RoutedEventArgs e)
         {
             SelectedTreeItem.Name = NodeName.Text;
-            MenuTree.ItemsSource = new ObservableCollection<MenuTreeItems>(new[] { Menu });;
+            MenuTree.ItemsSource = new ObservableCollection<MenuTreeItems>(new[] { Menu });
+            ;
         }
 
         private void TablesListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedTableItems.ItemsSource = (TablesListView.SelectedItem as RollableTable)?.Rows;
+            SelectedTableItems.ItemsSource = ( TablesListView.SelectedItem as RollableTable )?.Rows;
         }
 
         private void IsRemoveUsed_OnChecked(object sender, RoutedEventArgs e)
@@ -219,7 +244,7 @@ namespace RollableTalbes.MenuMaker
                 }
             }
         }
-        
+
         private void ButtonDown_OnClick(object sender, RoutedEventArgs e)
         {
             var selectedItem = (MenuTreeItems)MenuTree.SelectedItem;
@@ -240,6 +265,7 @@ namespace RollableTalbes.MenuMaker
         {
             var selectedTable = (RollableTable)TablesListView.SelectedItem;
             StaticHolder.TablesService.DeleteTable(selectedTable.Name);
+            Menu.DeleteTableByName(selectedTable.Name);
             Tables = StaticHolder.TablesService.GetTables();
             UpdateTables();
         }

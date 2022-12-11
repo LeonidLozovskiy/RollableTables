@@ -35,7 +35,7 @@ public class MainWindowViewModel : ViewModelBase
 
     public void AddToLog(string log)
     {
-        Log += $"{DateTime.Now}: {log}{Environment.NewLine}";
+        Log += $"{DateTime.Now.ToString("T")}: {log}{Environment.NewLine}";
     }
 
     public void ChangeButtons(MenuItemLevelViewModel level)

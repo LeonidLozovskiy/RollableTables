@@ -12,6 +12,10 @@
                 <ResourceDictionary
                     Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/dark.purple.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Path x:Key="IconTriangle" x:Shared="False" Stretch="Uniform" Data="M50.25,133.5 L49.75,158.25 76,147.25 z"
+                  Fill="White" Stroke="White" />
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

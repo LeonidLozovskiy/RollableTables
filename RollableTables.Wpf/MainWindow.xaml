@@ -8,10 +8,14 @@
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  mc:Ignorable="d"
                  d:DataContext="{d:DesignInstance Type=rollableTables:MainWindowViewModel}"
-                 Title="MainWindow" Height="450" Width="350">
+                 Title="MainWindow" Height="550" Width="450">
+
+    <mah:MetroWindow.Resources>
+        <rollableTables:MenuItemTypeDiscriminatorToVisibilityConverter x:Key="MenuItemTypeDiscriminatorToVisibilityConverter" />
+    </mah:MetroWindow.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.4*" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <ScrollViewer>
@@ -19,8 +23,18 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button Command="{Binding Path=Command}"
-                                Margin="4" >
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Name}" TextWrapping="WrapWithOverflow"/>
+                                Margin="4"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{Binding Path=Name}" TextWrapping="WrapWithOverflow" />
+                                <ContentControl HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" Content="{StaticResource IconTriangle}"
+                                                Width="7" Height="7" Margin="4"
+                                                Visibility="{Binding MenuItemTypeDiscriminator, Converter={StaticResource MenuItemTypeDiscriminatorToVisibilityConverter}, ConverterParameter=False}">
+                                </ContentControl>
+                            </StackPanel>
                         </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

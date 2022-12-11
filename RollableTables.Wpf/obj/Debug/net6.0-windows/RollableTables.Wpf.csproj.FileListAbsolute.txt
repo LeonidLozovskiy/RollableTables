@@ -24,3 +24,5 @@ C:\proj\RollableTables\RollableTables.Wpf\obj\Debug\net6.0-windows\refint\Rollab
 C:\proj\RollableTables\RollableTables.Wpf\obj\Debug\net6.0-windows\RollableTables.pdb
 C:\proj\RollableTables\RollableTables.Wpf\obj\Debug\net6.0-windows\RollableTables.Wpf.genruntimeconfig.cache
 C:\proj\RollableTables\RollableTables.Wpf\obj\Debug\net6.0-windows\ref\RollableTables.dll
+C:\proj\RollableTables\bin\Debug\net6.0-windows\d20Icon.png
+C:\proj\RollableTables\bin\Debug\net6.0-windows\folderIcon.png

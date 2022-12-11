@@ -49,9 +49,8 @@ public class MainWindowViewModel : ViewModelBase
                 var backButton = new MenuItemLevelViewModel("Back", level.Parent.Childs);
                 backButton.Parent = level.Parent.Parent;
                 Buttons.Add(backButton);
+                Buttons.Add(new MenuItemLevelViewModel("On Top", ((MenuItemLevelViewModel)_buttonsTree).Childs));
             }
-            
-            Buttons.Add(new MenuItemLevelViewModel("On Top", ((MenuItemLevelViewModel)_buttonsTree).Childs));
         }
     }
 }
